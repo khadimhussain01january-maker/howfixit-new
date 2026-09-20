@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Age Calculator | Exact Age & Birthday Countdown</title>
+<meta name="description" content="Calculate your exact age and countdown to your next birthday.">
+
+<style>
+*{box-sizing:border-box}
+:root{
+  --purple:#7257ff;--violet:#9b7cff;--pink:#ff6fae;
+  --ink:#17152b;--muted:#77738e;--white:#fff;
+}
+body{
+  margin:0;min-height:100vh;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;
+  color:var(--ink);overflow-x:hidden;
+  background:
+    radial-gradient(circle at 8% 12%,rgba(114,87,255,.20),transparent 28%),
+    radial-gradient(circle at 90% 8%,rgba(255,111,174,.17),transparent 25%),
+    linear-gradient(135deg,#f8f7ff,#f2f4ff);
+}
+.bg-orb{position:fixed;border-radius:50%;filter:blur(2px);pointer-events:none;z-index:-1}
+.o1{width:180px;height:180px;background:rgba(155,124,255,.16);left:-60px;top:45%;animation:float1 8s ease-in-out infinite}
+.o2{width:130px;height:130px;background:rgba(255,111,174,.12);right:-35px;top:55%;animation:float2 9s ease-in-out infinite}
+@keyframes float1{50%{transform:translate(35px,-45px) scale(1.12)}}
+@keyframes float2{50%{transform:translate(-30px,30px) scale(.9)}}
+
+.wrap{width:min(1080px,92%);margin:42px auto 70px}
+.hero{text-align:center}
+.pill{
+  display:inline-flex;gap:8px;align-items:center;padding:8px 15px;border-radius:99px;
+  background:rgba(255,255,255,.75);border:1px solid #e7e3fa;color:var(--purple);
+  font-size:13px;font-weight:800;box-shadow:0 8px 25px rgba(50,35,120,.06)
+}
+.pulse{width:8px;height:8px;border-radius:50%;background:#65d59b;box-shadow:0 0 0 0 rgba(101,213,155,.5);animation:pulse 1.8s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 9px rgba(101,213,155,0)}100%{box-shadow:0 0 0 0 rgba(101,213,155,0)}}
+.hero h1{font-size:48px;letter-spacing:-2px;margin:15px 0 8px}
+.hero p{max-width:650px;margin:0 auto 28px;color:var(--muted);line-height:1.65}
+
+.panel{
+  display:grid;grid-template-columns:1fr 1.25fr;gap:0;overflow:hidden;
+  background:rgba(255,255,255,.86);border:1px solid rgba(222,218,242,.95);
+  border-radius:30px;box-shadow:0 28px 70px rgba(48,39,105,.12);backdrop-filter:blur(14px)
+}
+
+/* Animated visual */
+.visual{
+  min-height:540px;position:relative;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(150deg,#1c1838,#30265e 55%,#493b83);
+}
+.visual:before,.visual:after{
+  content:"";position:absolute;border-radius:50%;border:1px solid rgba(255,255,255,.12)
+}
+.visual:before{width:390px;height:390px;animation:spin 24s linear infinite}
+.visual:after{width:300px;height:300px;animation:spin 17s linear infinite reverse}
+@keyframes spin{to{transform:rotate(360deg)}}
+.star{position:absolute;width:4px;height:4px;border-radius:50%;background:#fff;opacity:.6;animation:twinkle 2.5s ease-in-out infinite}
+@keyframes twinkle{50%{opacity:.15;transform:scale(.5)}}
+
+.clock{
+  width:275px;height:275px;border-radius:50%;position:relative;z-index:2;
+  background:radial-gradient(circle,#302955 0 58%,#211c43 59% 100%);
+  border:9px solid rgba(255,255,255,.12);
+  box-shadow:0 0 0 12px rgba(255,255,255,.035),0 25px 60px rgba(0,0,0,.3);
+  animation:clockFloat 5s ease-in-out infinite
+}
+@keyframes clockFloat{50%{transform:translateY(-9px)}}
+.tick{position:absolute;left:50%;top:50%;width:3px;height:12px;background:rgba(255,255,255,.55);transform-origin:50% 125px}
+.tick:nth-child(1){transform:translate(-50%,-125px) rotate(0deg)}
+.tick:nth-child(2){transform:translate(-50%,-125px) rotate(30deg)}
+.tick:nth-child(3){transform:translate(-50%,-125px) rotate(60deg)}
+.tick:nth-child(4){transform:translate(-50%,-125px) rotate(90deg)}
+.tick:nth-child(5){transform:translate(-50%,-125px) rotate(120deg)}
+.tick:nth-child(6){transform:translate(-50%,-125px) rotate(150deg)}
+.tick:nth-child(7){transform:translate(-50%,-125px) rotate(180deg)}
+.tick:nth-child(8){transform:translate(-50%,-125px) rotate(210deg)}
+.tick:nth-child(9){transform:translate(-50%,-125px) rotate(240deg)}
+.tick:nth-child(10){transform:translate(-50%,-125px) rotate(270deg)}
+.tick:nth-child(11){transform:translate(-50%,-125px) rotate(300deg)}
+.tick:nth-child(12){transform:translate(-50%,-125px) rotate(330deg)}
+.hand{position:absolute;left:50%;bottom:50%;transform-origin:50% 100%;border-radius:8px}
+.hour{height:67px;width:7px;background:#fff;transform:translateX(-50%) rotate(35deg)}
+.minute{height:94px;width:5px;background:#a98dff;transform:translateX(-50%) rotate(125deg)}
+.second{height:105px;width:2px;background:#ff77b0;transform:translateX(-50%) rotate(0deg);animation:second 60s linear infinite}
+@keyframes second{to{transform:translateX(-50%) rotate(360deg)}}
+.center{position:absolute;width:14px;height:14px;border-radius:50%;background:#ff77b0;left:50%;top:50%;transform:translate(-50%,-50%);box-shadow:0 0 18px #ff77b0}
+.clock-title{position:absolute;top:56%;left:50%;transform:translateX(-50%);color:rgba(255,255,255,.5);font-size:10px;letter-spacing:3px;font-weight:800;z-index:3}
+.visual-caption{position:absolute;bottom:32px;text-align:center;color:#fff;z-index:3}
+.visual-caption strong{display:block;font-size:20px}
+.visual-caption span{font-size:13px;color:rgba(255,255,255,.6)}
+
+.content{padding:38px}
+label{display:block;font-size:14px;font-weight:850;margin-bottom:9px}
+.date-row{display:flex;gap:12px}
+input{
+  width:100%;height:56px;border:1px solid #dedbea;border-radius:14px;
+  background:#fbfaff;padding:0 15px;font-size:16px;outline:none;transition:.2s
+}
+input:focus{border-color:var(--purple);box-shadow:0 0 0 4px rgba(114,87,255,.1)}
+button{
+  height:56px;border:0;border-radius:14px;padding:0 23px;white-space:nowrap;
+  color:#fff;font-size:15px;font-weight:850;cursor:pointer;
+  background:linear-gradient(135deg,var(--purple),var(--violet));
+  box-shadow:0 12px 25px rgba(114,87,255,.27);transition:.2s
+}
+button:hover{transform:translateY(-2px);box-shadow:0 16px 30px rgba(114,87,255,.32)}
+.error{height:25px;padding-top:8px;color:#d33c5d;font-size:13px;font-weight:700}
+#result{display:none;animation:appear .45s ease}
+@keyframes appear{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+.result-top{
+  margin-top:10px;border-radius:21px;padding:22px;text-align:center;color:#fff;
+  background:linear-gradient(135deg,#201b43,#55438c);position:relative;overflow:hidden
+}
+.result-top:after{content:"";position:absolute;width:190px;height:190px;border-radius:50%;right:-70px;top:-100px;background:rgba(255,255,255,.08)}
+.small{font-size:11px;letter-spacing:2px;text-transform:uppercase;opacity:.7;font-weight:800}
+.big{font-size:31px;font-weight:900;margin:7px 0}
+.sub{font-size:13px;opacity:.65}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+.stat{text-align:center;padding:17px 8px;border:1px solid #e9e6f3;border-radius:16px;background:#fff}
+.num{font-size:25px;font-weight:900;color:var(--purple)}
+.name{font-size:11px;color:var(--muted);font-weight:800;margin-top:3px;letter-spacing:.5px}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.info{border:1px solid #e9e6f3;border-radius:16px;padding:18px;background:#fbfaff}
+.info h3{font-size:14px;margin:0 0 8px}
+.info .value{font-size:21px;font-weight:900;color:var(--purple)}
+.info p{font-size:12px;color:var(--muted);margin:5px 0 0;line-height:1.5}
+.privacy{text-align:center;color:#9894aa;font-size:11px;margin-top:17px}
+
+@media(max-width:850px){
+  .panel{grid-template-columns:1fr}
+  .visual{min-height:390px}
+  .clock{width:220px;height:220px}
+  .tick{transform-origin:50% 99px!important}
+  .visual:before{width:310px;height:310px}.visual:after{width:245px;height:245px}
+}
+@media(max-width:600px){
+  .wrap{margin-top:28px}.hero h1{font-size:37px}.content{padding:22px}
+  .date-row{flex-direction:column}.date-row button{width:100%}
+  .stats{grid-template-columns:repeat(3,1fr)}
+  .info-grid{grid-template-columns:1fr}.visual{min-height:350px}
+}
+
+.brand-name{font-size:14px;letter-spacing:3px;text-transform:uppercase;font-weight:800;opacity:.9;margin-bottom:8px}
+.date-selects{display:grid;grid-template-columns:1fr 1.35fr 1.25fr;gap:10px}
+.date-selects select{width:100%;padding:13px 12px;border-radius:14px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.08);color:inherit;font:inherit;outline:none}
+.date-selects option{color:#111}
+@media(max-width:520px){.date-selects{grid-template-columns:1fr 1fr 1fr}}
+.footer-brand{text-align:center;margin-top:18px;font-size:12px;opacity:.7;letter-spacing:.5px}
+</style>
+</head>
+
+<body>
+<div class="bg-orb o1"></div><div class="bg-orb o2"></div>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="pill"><span class="pulse"></span> Free • Fast • Private</div>
+    <div class="brand-name">Naveed</div><h1>Age Calculator</h1>
+    <p>Discover your exact age and see how much time has passed since your birth — beautifully calculated in seconds.</p>
+  </header>
+
+  <section class="panel">
+    <div class="visual">
+      <span class="star" style="left:18%;top:18%;animation-delay:.2s"></span>
+      <span class="star" style="left:78%;top:23%;animation-delay:1s"></span>
+      <span class="star" style="left:15%;top:70%;animation-delay:1.7s"></span>
+      <span class="star" style="left:83%;top:72%;animation-delay:.7s"></span>
+      <span class="star" style="left:30%;top:12%;animation-delay:1.2s"></span>
+      <span class="star" style="left:69%;top:83%;animation-delay:2s"></span>
+
+      <div class="clock">
+        <i class="tick"></i><i class="tick"></i><i class="tick"></i><i class="tick"></i>
+        <i class="tick"></i><i class="tick"></i><i class="tick"></i><i class="tick"></i>
+        <i class="tick"></i><i class="tick"></i><i class="tick"></i><i class="tick"></i>
+        <span class="hand hour"></span><span class="hand minute"></span><span class="hand second"></span>
+        <span class="center"></span>
+        <span class="clock-title">YOUR TIME</span>
+      </div>
+      <div class="visual-caption">
+        <strong>Every moment counts.</strong>
+        <span>Calculate yours instantly.</span>
+      </div>
+    </div>
+
+    <div class="content">
+      <label for="dob">When were you born?</label>
+      <div class="date-row">
+        <input id="dob" type="date" aria-label="Date of birth">
+        <button type="button" onclick="calculateAge()">Calculate Age ✨</button>
+      </div>
+      <div id="error" class="error"></div>
+
+      <div id="result">
+        <div class="result-top">
+          <div class="small">Your exact age</div>
+          <div id="age" class="big"></div>
+          <div id="born" class="sub"></div>
+        </div>
+
+        <div class="stats">
+          <div class="stat"><div id="y" class="num">0</div><div class="name">YEARS</div></div>
+          <div class="stat"><div id="m" class="num">0</div><div class="name">MONTHS</div></div>
+          <div class="stat"><div id="d" class="num">0</div><div class="name">DAYS</div></div>
+        </div>
+
+        <div class="info-grid">
+          <div class="info">
+            <h3>🎂 Next Birthday</h3>
+            <div id="next" class="value"></div>
+            <p id="nextDate"></p>
+          </div>
+          <div class="info">
+            <h3>📅 Born On</h3>
+            <div id="bornDate" class="value"></div>
+            <p>Your calculation updates using today's date.</p>
+          </div>
+        </div>
+
+        <div class="privacy">🔒 Your date of birth stays in your browser and is not uploaded.</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+function niceDate(date){
+  return date.toLocaleDateString(undefined,{year:"numeric",month:"long",day:"numeric"});
+}
+function calculateAge(){
+  const input=document.getElementById("dob"), err=document.getElementById("error");
+  const result=document.getElementById("result");
+  err.textContent=""; result.style.display="none";
+  if(!input.value){err.textContent="Please select your date of birth.";return;}
+
+  const [yy,mm,dd]=input.value.split("-").map(Number);
+  const birth=new Date(yy,mm-1,dd); birth.setHours(0,0,0,0);
+  const today=new Date(); today.setHours(0,0,0,0);
+
+  if(birth>today){err.textContent="Date of birth cannot be in the future.";return;}
+
+  let y=today.getFullYear()-yy;
+  let m=today.getMonth()-(mm-1);
+  let d=today.getDate()-dd;
+
+  if(d<0){
+    m--;
+    d+=new Date(today.getFullYear(),today.getMonth(),0).getDate();
+  }
+  if(m<0){y--;m+=12;}
+
+  let next=new Date(today.getFullYear(),mm-1,dd);
+  if(next<today) next=new Date(today.getFullYear()+1,mm-1,dd);
+  const until=Math.ceil((next-today)/86400000);
+
+  document.getElementById("y").textContent=y.toLocaleString();
+  document.getElementById("m").textContent=m;
+  document.getElementById("d").textContent=d;
+  document.getElementById("age").textContent=`${y} Years, ${m} Months, ${d} Days`;
+  document.getElementById("born").textContent=`Born ${niceDate(birth)}`;
+  document.getElementById("bornDate").textContent=niceDate(birth);
+  document.getElementById("next").textContent=until===0?"Happy Birthday! 🎉":`${until.toLocaleString()} days`;
+  document.getElementById("nextDate").textContent=`${niceDate(next)}`;
+
+  result.style.display="block";
+}
+
+// Day → Month → Year date selectors
+const dayEl=document.getElementById('day'), monthEl=document.getElementById('month'), yearEl=document.getElementById('year');
+if(dayEl&&monthEl&&yearEl){
+  for(let d=1;d<=31;d++) dayEl.insertAdjacentHTML('beforeend',`<option value="${d}">${d}</option>`);
+  const months=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  months.forEach((m,i)=>monthEl.insertAdjacentHTML('beforeend',`<option value="${i+1}">${m}</option>`));
+  const nowY=new Date().getFullYear();
+  for(let y=nowY;y>=1900;y--) yearEl.insertAdjacentHTML('beforeend',`<option value="${y}">${y}</option>`);
+}
+</script>
+<div class="footer-brand">Designed &amp; built by Naveed</div>
+</body>
+</html>
