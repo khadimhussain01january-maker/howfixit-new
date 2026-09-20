@@ -1,0 +1,64 @@
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-col footer-brand">
+        <div class="logo"><img src="/assets/logo.png" alt="HowFixIt logo"></div>
+        <p>Practical how-to guides for solving everyday problems, fixing common issues, and making life a little easier.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="/#guides">How-To Guides</a></li>
+          <li><a href="/services/">Services</a></li>
+          <li><a href="/our-work/">Our Work</a></li>
+          <li><a href="/about/">About Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Help</h4>
+        <ul>
+          <li><a href="/contact/">Contact</a></li>
+          <li><a href="#">Search</a></li>
+          <li><a href="#">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Popular Topics</h4>
+        <ul>
+          <li><a href="/#guides">Home &amp; Cleaning</a></li>
+          <li><a href="/#guides">Technology</a></li>
+          <li><a href="/#guides">Kitchen</a></li>
+          <li><a href="/#guides">Bathroom</a></li>
+          <li><a href="/#guides">Organization</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 HowFixIt. All rights reserved.</span>
+      <div class="footer-legal">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Use</a>
+        <a href="#">Disclaimer</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var toggle = document.getElementById('menuToggle');
+    var nav = document.getElementById('mobile-nav');
+    if(!toggle || !nav) return;
+    toggle.addEventListener('click', function(){
+      var open = nav.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    nav.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){
+        nav.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+  })();
+</script>

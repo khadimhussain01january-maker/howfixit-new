@@ -1,0 +1,28 @@
+---
+layout: base.njk
+---
+<section class="guide-hero">
+  <div class="wrap">
+    <span class="eyebrow">{{ category }}</span>
+    <h1>{{ title }}</h1>
+    <p class="lede">{{ description }}</p>
+    {% if date %}
+    <div class="guide-meta">
+      <span>Updated {{ date | readableDate }}</span>
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+<section class="guide-body-wrap">
+  <div class="wrap">
+    <div class="guide-body">
+      {{ content | safe }}
+
+      <div class="guide-cta">
+        <p>Got a different problem? Browse more how-to guides.</p>
+        <a href="/#guides" class="btn btn-primary">Explore How-To Guides</a>
+      </div>
+    </div>
+  </div>
+</section>

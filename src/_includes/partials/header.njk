@@ -1,0 +1,43 @@
+<header class="site-header">
+  <div class="wrap">
+    <a href="/" class="logo" aria-label="HowFixIt home"><img src="/assets/logo.png" alt="HowFixIt logo"></a>
+
+    <nav class="primary-nav" aria-label="Primary">
+      <ul>
+        <li><a href="/"{% if page.url == "/" %} aria-current="page"{% endif %}>Home</a></li>
+        <li><a href="/#guides">How-To Guides</a></li>
+        <li><a href="/services/"{% if page.url == "/services/" %} aria-current="page"{% endif %}>Services</a></li>
+        <li><a href="/our-work/"{% if page.url == "/our-work/" %} aria-current="page"{% endif %}>Our Work</a></li>
+        <li><a href="/about/"{% if page.url == "/about/" %} aria-current="page"{% endif %}>About Us</a></li>
+        <li><a href="/contact/"{% if page.url == "/contact/" %} aria-current="page"{% endif %}>Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="header-actions">
+      <form class="header-search" role="search" action="#">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <label for="hdr-search" class="visually-hidden">Search HowFixIt</label>
+        <input id="hdr-search" type="search" placeholder="Search guides…">
+      </form>
+      <button class="menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav" id="menuToggle">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile">
+    <ul>
+      <li><a href="/"{% if page.url == "/" %} aria-current="page"{% endif %}>Home</a></li>
+      <li><a href="/#guides">How-To Guides</a></li>
+      <li><a href="/services/"{% if page.url == "/services/" %} aria-current="page"{% endif %}>Services</a></li>
+      <li><a href="/our-work/"{% if page.url == "/our-work/" %} aria-current="page"{% endif %}>Our Work</a></li>
+      <li><a href="/about/"{% if page.url == "/about/" %} aria-current="page"{% endif %}>About Us</a></li>
+      <li><a href="/contact/"{% if page.url == "/contact/" %} aria-current="page"{% endif %}>Contact</a></li>
+    </ul>
+    <form class="header-search mobile-search wrap" role="search" action="#" style="margin-left:24px; margin-right:24px;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <label for="mobile-search-input" class="visually-hidden">Search HowFixIt</label>
+      <input id="mobile-search-input" type="search" placeholder="Search guides…">
+    </form>
+  </nav>
+</header>

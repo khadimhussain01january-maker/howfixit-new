@@ -1,0 +1,97 @@
+---
+layout: base.njk
+title: Our Work — HowFixIt
+description: A look at the how-to guides HowFixIt has published — practical, step-by-step content across home, kitchen, bathroom, technology, and everyday problems.
+permalink: /our-work/
+---
+  <section class="page-hero">
+    <div class="wrap">
+      <div>
+        <span class="eyebrow">Our Work</span>
+        <h1>Guides We've Put Into the World</h1>
+        <p class="lede">A look at the how-to content we've published so far — practical, step-by-step guides across the topics people ask about most.</p>
+      </div>
+      <div class="page-hero-art" aria-hidden="true">
+        <svg viewBox="0 0 340 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="170" cy="160" r="140" stroke="var(--border-strong)" stroke-width="1.5"/>
+          <circle cx="170" cy="160" r="98" fill="var(--accent-tint)"/>
+          <g transform="translate(110,100)">
+            <rect x="0" y="0" width="46" height="60" rx="4" fill="var(--surface)" stroke="var(--accent)" stroke-width="4"/>
+            <path d="M9 14h28M9 24h28M9 34h20M9 44h16" stroke="var(--accent)" stroke-width="3" stroke-linecap="round"/>
+          </g>
+          <circle cx="235" cy="90" r="5" fill="var(--accent)"/>
+          <circle cx="100" cy="225" r="6" fill="var(--accent-dark)"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+  <section aria-labelledby="work-heading">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <h2 id="work-heading">Published Guides</h2>
+          <p class="section-sub">Every guide HowFixIt has published, newest first.</p>
+        </div>
+      </div>
+
+      <div class="article-grid">
+        {% for guide in collections.guides | reverse %}
+        <a class="card-link" href="{{ guide.url }}" style="display:contents;">
+        <article class="article-card">
+          <div class="article-thumb {{ guide.data.tone or "tone-home" }}">
+            <span class="thumb-icon">{{ guide.data.tone | toneIcon | safe }}</span>
+          </div>
+          <div class="article-body">
+            <span class="article-cat">{{ guide.data.category }}</span>
+            <h3>{{ guide.data.title }}</h3>
+            <p class="desc">{{ guide.data.description }}</p>
+            <span class="article-read">Read Guide →</span>
+          </div>
+        </article>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <section class="alt-bg" aria-labelledby="standards-heading">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <h2 id="standards-heading">What Every Guide Has in Common</h2>
+        </div>
+      </div>
+
+      <div class="standards-grid">
+        <div class="standard-card">
+          <svg class="standard-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+          <h3>Starts with a real problem</h3>
+          <p>Every guide begins with a specific, common problem — not a topic chosen for its own sake.</p>
+        </div>
+        <div class="standard-card">
+          <svg class="standard-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+          <h3>Clear steps, no filler</h3>
+          <p>Instructions are written to be followed, not padded out to look more thorough than they are.</p>
+        </div>
+        <div class="standard-card">
+          <svg class="standard-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 4v5h-5"/></svg>
+          <h3>Revisited when things change</h3>
+          <p>Guides are updated when a method, product, or detail no longer holds up.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section>
+    <div class="wrap">
+      <div class="final-cta">
+        <div>
+          <h2>Want to See More?</h2>
+          <p>Browse the full library of how-to guides, or get in touch if you'd like to work with us on something new.</p>
+        </div>
+        <div class="final-cta-actions">
+          <a href="/#guides" class="btn btn-primary">Explore How-To Guides</a>
+          <a href="/services/" class="btn btn-outline">See Our Services</a>
+        </div>
+      </div>
+    </div>
+  </section>

@@ -1,0 +1,49 @@
+backend:
+  name: github
+  repo: khadimhussain01january-maker/howfixit-new
+  branch: main
+  base_url: https://REPLACE-WITH-YOUR-OAUTH-WORKER.workers.dev
+  auth_endpoint: auth
+
+site_url: https://howfixit.publicvm.com
+display_url: https://howfixit.publicvm.com
+
+media_folder: "src/assets/uploads"
+public_folder: "/assets/uploads"
+
+collections:
+  - name: "guides"
+    label: "Guides"
+    label_singular: "Guide"
+    folder: "src/guides"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: title
+    fields:
+      - { label: "Layout", name: "layout", widget: "hidden", default: "guide.njk" }
+      - { label: "Title", name: "title", widget: "string", hint: "The guide's headline, e.g. 'How to Clean a Washing Machine That Smells'" }
+      - label: "Category"
+        name: "category"
+        widget: "select"
+        options:
+          - "Home & Cleaning"
+          - "Kitchen"
+          - "Bathroom"
+          - "Technology"
+          - "Organization"
+          - "Everyday Problems"
+      - label: "Color Tone"
+        name: "tone"
+        widget: "select"
+        hint: "Controls the card color and icon on the homepage — pick the one matching the category above."
+        options:
+          - { label: "Blue — Home & Cleaning", value: "tone-home" }
+          - { label: "Tan — Kitchen", value: "tone-kitchen" }
+          - { label: "Teal — Bathroom", value: "tone-bath" }
+          - { label: "Purple — Technology", value: "tone-tech" }
+          - { label: "Pink — Organization", value: "tone-org" }
+          - { label: "Gold — Everyday Problems", value: "tone-everyday" }
+      - { label: "Short Description", name: "description", widget: "text", hint: "One or two sentences shown on the guide card and at the top of the article." }
+      - { label: "Date", name: "date", widget: "datetime", format: "YYYY-MM-DD", default: "" }
+      - { label: "Tags", name: "tags", widget: "hidden", default: "guides" }
+      - { label: "Article Body", name: "body", widget: "markdown" }
