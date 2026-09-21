@@ -1,5 +1,6 @@
 module.exports = function (eleventyConfig) {
   // Copy the assets folder (CSS, logo, and any images added via the CMS) as-is.
+  eleventyConfig.addPassthroughCopy({ "admin": "admin" });
   eleventyConfig.addPassthroughCopy("src/assets");
   eleventyConfig.addPassthroughCopy("src/CNAME");
 
