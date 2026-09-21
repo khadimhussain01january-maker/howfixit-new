@@ -2,7 +2,7 @@ backend:
   name: github
   repo: khadimhussain01january-maker/howfixit-new
   branch: main
-  base_url: https://REPLACE-WITH-YOUR-OAUTH-WORKER.workers.dev
+  base_url: https://howfixit-oauth.khadimhussain01january.workers.dev
   auth_endpoint: auth
 
 site_url: https://howfixit.publicvm.com
